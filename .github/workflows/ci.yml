@@ -1,0 +1,32 @@
+name: CI - Test find_lowest_number
+
+on:
+  push:
+
+jobs:
+  run-tests:
+    name: Run automated tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run tests with diff
+        run: |
+          echo "Running Test 1 - 10 numbers"
+          python3 find_lowest_number.py test_data/test1_input.txt test1_output.txt
+          diff test1_output.txt test_data/test1_expected.txt
+
+          echo "Running Test 2 - single number"
+          python3 find_lowest_number.py test_data/test2_input.txt test2_output.txt
+          diff test2_output.txt test_data/test2_expected.txt
+
+          echo "Running Test 3 - blank file"
+          python3 find_lowest_number.py test_data/test3_input.txt test3_output.txt
+          diff test3_output.txt test_data/test3_expected.txt
